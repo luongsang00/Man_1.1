@@ -133,7 +133,4 @@ void CGameObject::RenderBoundingBox()
 }
 
 
-CGameObject::~CGameObject()
-{
-
-}
+CGameObject::~CGameObject(){}
