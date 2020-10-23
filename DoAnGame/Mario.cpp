@@ -1,4 +1,4 @@
-#include <algorithm>
+﻿#include <algorithm>
 #include <assert.h>
 #include "Utils.h"
 
@@ -6,7 +6,9 @@
 #include "Game.h"
 
 #include "Goomba.h"
+#include "Koopas.h"
 #include "Portal.h"
+#include "GachHoi.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -97,7 +99,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (goomba->GetState() != GOOMBA_STATE_DIE)
 						{
-							if (level > MARIO_LEVEL_SMALL)
+							if (level > MARIO_LEVEL_BIG)
+							{
+								level = MARIO_LEVEL_BIG;
+								StartUntouchable();
+							}
+							else if (level == MARIO_LEVEL_BIG)
 							{
 								level = MARIO_LEVEL_SMALL;
 								StartUntouchable();
@@ -115,6 +122,76 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
+	//Xử lý va chạm rùa
+	for (UINT i = 0; i < coEventsResult.size(); i++)
+	{
+		LPCOLLISIONEVENT e = coEventsResult[i];
+
+		if (dynamic_cast<CKoopas*>(e->obj)) 
+		{
+			CKoopas * koopas = dynamic_cast<CKoopas*>(e->obj);
+ 
+			if (e->ny < 0)
+			{
+				if (koopas->GetState() != KOOPAS_STATE_DIE)
+				{
+					koopas->SetState(KOOPAS_STATE_DIE);
+					vy = -MARIO_JUMP_DEFLECT_SPEED;
+				}
+			}
+			else if (e->nx != 0)
+			{
+				if (untouchable == 0)
+				{
+					if (koopas->GetState() != KOOPAS_STATE_DIE)
+					{
+						if (level > MARIO_LEVEL_BIG)
+						{
+							level = MARIO_LEVEL_BIG;
+							StartUntouchable();
+						}
+						else if (level == MARIO_LEVEL_BIG)
+						{
+							level = MARIO_LEVEL_SMALL;
+							StartUntouchable();
+						}
+						else
+							SetState(MARIO_STATE_DIE);
+					}
+				}
+			}
+		} 
+		else if (dynamic_cast<CPortal*>(e->obj))
+		{
+			CPortal* p = dynamic_cast<CPortal*>(e->obj);
+			CGame::GetInstance()->SwitchScene(p->GetSceneId());
+		}
+	}
+	//xử lý va chạm với gạch
+	for (UINT i = 0; i < coEventsResult.size(); i++)
+	{
+		LPCOLLISIONEVENT e = coEventsResult[i];
+
+		if (dynamic_cast<GachHoi*>(e->obj))  
+		{
+			GachHoi* gachhoi = dynamic_cast<GachHoi*>(e->obj);
+			if (e->dy < 0)
+			{
+				if (gachhoi->GetState() != GACHHOI_STATE_DACHAM)
+				{
+					gachhoi->SetState(GACHHOI_STATE_DACHAM);
+					vy = -MARIO_JUMP_DEFLECT_SPEED; 
+				}
+			}
+			
+		} 
+		else if (dynamic_cast<CPortal*>(e->obj))
+		{
+			CPortal* p = dynamic_cast<CPortal*>(e->obj);
+			CGame::GetInstance()->SwitchScene(p->GetSceneId());
+		}
+	}
+
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

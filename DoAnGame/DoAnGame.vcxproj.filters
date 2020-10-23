@@ -63,6 +63,12 @@
     <ClInclude Include="Hop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tru.h">
+      <Filter>Header Files\Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GachHoi.h">
+      <Filter>Header Files\Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utils.cpp">
@@ -111,6 +117,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Hop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TRU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GachHoi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

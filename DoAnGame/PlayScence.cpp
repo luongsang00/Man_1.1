@@ -8,6 +8,8 @@
 #include "Portal.h"
 #include "ChiVe.h"
 #include "Hop.h"
+#include "Tru.h"
+#include "GachHoi.h"
 
 using namespace std;
 
@@ -33,6 +35,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
 #define OBJECT_TYPE_KOOPAS	3
 #define OBJECT_TYPE_VE	4
 #define OBJECT_TYPE_HOP 5
+#define OBJECT_TYPE_TRU 6
+#define OBJECT_TYPE_GACHHOI 7
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -160,6 +164,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
 	case OBJECT_TYPE_VE: obj = new KhongVaCham(); break;
 	case OBJECT_TYPE_HOP: obj = new Hop(); break;
+	case OBJECT_TYPE_TRU: obj = new Tru(); break;
+	case OBJECT_TYPE_GACHHOI: obj = new GachHoi(); break;
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = atof(tokens[4].c_str());
