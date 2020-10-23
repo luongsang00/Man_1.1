@@ -63,11 +63,11 @@
     <ClInclude Include="Hop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tru.h">
-      <Filter>Header Files\Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="GachHoi.h">
-      <Filter>Header Files\Resource Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tru.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
